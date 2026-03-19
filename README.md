@@ -1,3 +1,5 @@
+VIDEO LINK FOR STRATEGY EXPLAINING:
+"https://drive.google.com/file/d/1-tAz_jmvLySNzxE6Wtv80SNQNDgujLKT/view?usp=drivesdk"
 SprintShield AI: Parametric Income Protection for Q-Commerce
 Project Status: Phase 1 - Foundation & Adversarial Defense (Guidewire DEVTrails 2026)
 Mission: Protecting the livelihoods of India's Q-Commerce partners from external disruptions with AI-powered, fraud-resistant parametric insurance.
