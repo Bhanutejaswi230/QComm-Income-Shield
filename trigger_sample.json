@@ -1,0 +1,19 @@
+{
+  "rider_id": "RAVI_ZEPTO_402",
+  "zone_id": "MUM_ANDHERI_WEST",
+  "timestamp": "2026-03-19T18:30:00Z",
+  "disruption_event": {
+    "type": "WEATHER_EXTREME",
+    "parameter": "PRECIPITATION",
+    "value": "18mm/hr",
+    "threshold_met": true
+  },
+  "adversarial_check": {
+    "gps_spoofing_detected": false,
+    "accelerometer_vibration_detected": true,
+    "cell_tower_match": true,
+    "trust_score": 0.95
+  },
+  "payout_status": "AUTO_TRIGGERED",
+  "payout_amount": 250
+}
