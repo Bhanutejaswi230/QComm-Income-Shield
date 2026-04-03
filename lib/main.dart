@@ -1,57 +1,83 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:math';
 
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false, 
-    home: RegistrationScreen(),
+    home: InnovationRegistration(),
   ));
 }
 
-// --- FEATURE 1: WORKER REGISTRATION ---
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+// --- INNOVATIVE REGISTRATION SCREEN ---
+class InnovationRegistration extends StatefulWidget {
+  const InnovationRegistration({super.key});
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  State<InnovationRegistration> createState() => _InnovationRegistrationState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _InnovationRegistrationState extends State<InnovationRegistration> {
+  final nameController = TextEditingController();
+  final idController = TextEditingController();
   String selectedZone = "Safe Zone"; 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("QComm: Worker Shield"), backgroundColor: Colors.blueAccent),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Step 1: Registration", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
-            const TextField(decoration: InputDecoration(labelText: "Full Name", border: OutlineInputBorder())),
-            const SizedBox(height: 10),
-            const TextField(decoration: InputDecoration(labelText: "Rider ID (e.g. SW-101)", border: OutlineInputBorder())),
-            const SizedBox(height: 20),
-            const Text("Hyper-local Operating Zone:", style: TextStyle(fontWeight: FontWeight.bold)),
-            DropdownButton<String>(
-              value: selectedZone,
-              isExpanded: true,
-              items: ["Safe Zone", "Flood-Prone Zone"].map((String value) {
-                return DropdownMenuItem<String>(value: value, child: Text(value));
-              }).toList(),
-              onChanged: (val) => setState(() => selectedZone = val!),
-            ),
-            const Spacer(),
-            SizedBox(
+            Container(
+              height: 250,
               width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent, foregroundColor: Colors.white),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (c) => Dashboard(zone: selectedZone))),
-                child: const Text("Generate Policy & Activate Shield"),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [Colors.blueAccent, Colors.indigo]),
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
               ),
-            )
+              child: const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.shield_rounded, color: Colors.white, size: 80),
+                    Text("QCOMM INCOME SHIELD", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                children: [
+                  const Text("Worker Onboarding", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 20),
+                  TextField(controller: nameController, decoration: const InputDecoration(labelText: "Full Name", prefixIcon: Icon(Icons.person))),
+                  const SizedBox(height: 10),
+                  TextField(controller: idController, decoration: const InputDecoration(labelText: "Rider ID (Leave blank to auto-generate)", prefixIcon: Icon(Icons.badge))),
+                  const SizedBox(height: 20),
+                  const Text("Hyper-local Operating Zone:", style: TextStyle(fontWeight: FontWeight.bold)),
+                  DropdownButton<String>(
+                    isExpanded: true,
+                    value: selectedZone,
+                    items: ["Safe Zone", "Flood-Prone Zone"].map((String value) => DropdownMenuItem(value: value, child: Text(value))).toList(),
+                    onChanged: (val) => setState(() => selectedZone = val!),
+                  ),
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.indigo, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                      onPressed: () {
+                        String finalID = idController.text.isEmpty ? "RID-${Random().nextInt(9999)}" : idController.text;
+                        Navigator.push(context, MaterialPageRoute(builder: (c) => Dashboard(name: nameController.text, riderID: finalID, zone: selectedZone)));
+                      },
+                      child: const Text("ACTIVATE PROTECTION", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -59,68 +85,101 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 }
 
-// --- FEATURE 2, 3, & 4: POLICY, PREMIUMS, & ZERO-TOUCH CLAIMS ---
+// --- PROFESSIONAL DASHBOARD & ZERO-TOUCH SYSTEM ---
 class Dashboard extends StatefulWidget {
-  final String zone;
-  const Dashboard({super.key, required this.zone});
+  final String name, riderID, zone;
+  const Dashboard({super.key, required this.name, required this.riderID, required this.zone});
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
   double premium = 50.0;
-  String status = "Shield Active: Monitoring Sensors ✅";
-  String sensorLog = "Accelerometer: Valid Movement Detected";
+  String shieldStatus = "Monitoring Active";
+  bool isTriggered = false;
 
   @override
   void initState() {
     super.initState();
-    // AI LOGIC: Dynamic Premium (₹2 discount for safe zones as per prompt)
-    if (widget.zone == "Safe Zone") {
-      premium = 48.0; 
-    }
+    if (widget.zone == "Safe Zone") premium = 48.0;
   }
 
-  // AUTOMATED TRIGGER LOGIC: Zero-Touch Claim Simulation
-  void simulateRainTrigger() {
-    setState(() => status = "Alert: Heavy Rain Detected in Zone! 🌧️");
-    Timer(const Duration(seconds: 3), () {
-      showDialog(
-        context: context,
-        builder: (c) => AlertDialog(
-          title: const Text("Zero-Touch Payout! 💰"),
-          content: const Text("Our system detected a disruption. ₹150 has been added to your wallet automatically. No application needed!"),
-          actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text("Confirm"))],
-        ),
-      );
-      setState(() => status = "Shield Active: Monitoring Sensors ✅");
+  void simulateZeroTouchClaim() {
+    setState(() { 
+      isTriggered = true; 
+      shieldStatus = "Detecting Disruption..."; 
     });
+
+    Timer(const Duration(seconds: 2), () {
+      setState(() => shieldStatus = "Validating via Satellite & Sensors...");
+      Timer(const Duration(seconds: 2), () {
+        setState(() => shieldStatus = "Claim Approved! Payout Sent.");
+        _showPayoutDialog();
+      });
+    });
+  }
+
+  void _showPayoutDialog() {
+    showDialog(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: const Row(children: [Icon(Icons.check_circle, color: Colors.green), Text(" Automated Payout")]),
+        content: const Text("No manual filing required. Zero-Touch claims process complete. ₹150 added to your wallet."),
+        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text("DISMISS"))],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Your Protection Shield")),
-      body: Center(
+      appBar: AppBar(title: const Text("Your Shield Status"), centerTitle: true),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Dynamic Weekly Premium:", style: TextStyle(fontSize: 18)),
-            Text("₹$premium", style: const TextStyle(fontSize: 55, fontWeight: FontWeight.bold, color: Colors.blue)),
-            Text("Risk Level: ${widget.zone}", style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 50),
-            Container(
-              padding: const EdgeInsets.all(10),
-              color: Colors.grey[200],
-              child: Text(sensorLog, style: const TextStyle(fontSize: 12, color: Colors.blueGrey)),
-            ),
-            const SizedBox(height: 20),
-            Text(status, style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: Colors.redAccent)),
+            Text("Policy Holder: ${widget.name.isEmpty ? 'Guest Rider' : widget.name}", style: const TextStyle(fontSize: 16, color: Colors.grey)),
+            Text("ID: ${widget.riderID}", style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: simulateRainTrigger,
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white, padding: const EdgeInsets.all(15)),
-              child: const Text("Simulate Rain Event (Demo Trigger)"),
+            Card(
+              elevation: 8,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              child: Container(
+                padding: const EdgeInsets.all(25),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(colors: [Colors.white, Colors.blue.shade50]),
+                ),
+                child: Column(
+                  children: [
+                    const Text("Dynamic Weekly Premium", style: TextStyle(fontSize: 14, color: Colors.indigo)),
+                    Text("₹$premium", style: const TextStyle(fontSize: 55, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                    Chip(label: Text(widget.zone), backgroundColor: Colors.indigo.shade100),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 40),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.gps_fixed, size: 14, color: Colors.green),
+                SizedBox(width: 5),
+                Text("Accelerometer & GPS Monitoring Active", style: TextStyle(fontSize: 12, color: Colors.green)),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(shieldStatus, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: isTriggered ? Colors.red : Colors.blueGrey)),
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.thunderstorm),
+                onPressed: isTriggered ? null : simulateZeroTouchClaim,
+                label: const Text("SIMULATE WEATHER DISRUPTION"),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange.shade800, foregroundColor: Colors.white),
+              ),
             ),
           ],
         ),
