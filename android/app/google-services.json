@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592241696696",
+    "project_id": "incomeshield-59a25",
+    "storage_bucket": "incomeshield-59a25.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592241696696:android:e6e8e2af5dbba0cd10b94d",
+        "android_client_info": {
+          "package_name": "com.example.income_shield"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw-BLJtit0uAL5l5_MIPW4b84A7l-vvfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
