@@ -1,5 +1,9 @@
-VIDEO LINK FOR STRATEGY EXPLAINING:
+VIDEO LINK FOR STRATEGY EXPLAINING(PHASE 1):
 "https://drive.google.com/file/d/1-tAz_jmvLySNzxE6Wtv80SNQNDgujLKT/view?usp=drivesdk"
+
+PHASE 2 VIDEO LINK:
+https://drive.google.com/file/d/1SlcX83_F_YkDdi0BjZvTcnhL9NQ4q_EJ/view?usp=drivesdk
+
 SprintShield AI: Parametric Income Protection for Q-Commerce
 Project Status: Phase 1 - Foundation & Adversarial Defense (Guidewire DEVTrails 2026)
 Mission: Protecting the livelihoods of India's Q-Commerce partners from external disruptions with AI-powered, fraud-resistant parametric insurance.
@@ -84,3 +88,29 @@ We believe in "Innocent Until Flagged."
 Green Tier: High-tenure riders with consistent delivery history get Instant Payouts.
 Yellow Tier (Flagged): If Sensor Fusion data is "Inconclusive" (e.g., the phone was in a backpack), the rider gets a notification: "Presence Unverified. Please upload a 5-second video of your surroundings to unlock your payout."
 Red Tier (Fraud): Confirmed spoofing leads to a 2-week "Cooling-off Period" where the rider cannot subscribe, preserving the ecosystem's integrity.
+
+
+QComm Income Shield Phase 2 Automation and Protection Submission
+
+SUMMARY
+QComm Income Shield is a parametric insurance platform built for Indias quick commerce delivery partners. We protect the livelihoods of gig workers by automating income recovery during uncontrollable disruptions like heavy rain or platform outages.
+PHASE 2 DELIVERABLES
+1 REGISTRATION PROCESS
+We created a seamless onboarding flow for delivery partners. An innovative feature includes automatic Rider ID generation if the field is left blank. This allows for rapid deployment during high-demand shifts. Hyper-local operating zones are captured to evaluate regional risk factors.
+2 AI INTEGRATION AND DYNAMIC PREMIUM CALCULATION
+Our pricing model uses machine learning logic to adjust weekly premiums based on hyper-local risk. As requested in the guidelines, workers in safe zones receive an automatic 2 rupee discount. The system also dynamically offers increased coverage hours based on predictive weather modeling.
+3 INSURANCE POLICY MANAGEMENT
+The dashboard allows workers to monitor their active shield status. We integrated mock sensor status for Accelerometer and GPS data to demonstrate how we prevent fraud like GPS spoofing and verify the riders location during a claim event.
+4 CLAIMS MANAGEMENT AND ZERO TOUCH PROCESS
+We built automated triggers to identify income loss. The solution showcases a seamless zero-touch claim process. When a disruption like heavy rain is detected via API triggers, the payout is approved and sent automatically. No manual forms or filings are required from the worker.
+TECHNICAL STACK
+Framework: Flutter
+Backend: Firebase
+Language: Dart
+Sensors: Accelerometer and GPS Monitoring
+Logic: 3 to 5 Automated Triggers for Income Loss
+HOW TO RUN THE PROTOTYPE
+1 Install the Flutter SDK
+2 Clone the repository from GitHub
+3 Run the command: flutter pub get
+4 Execute the app: flutter run -d chrome
